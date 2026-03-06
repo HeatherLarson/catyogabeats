@@ -355,7 +355,7 @@ const Index = () => {
               <RetroButton href="https://destinyarchitecture.net">
                 <AnimatedIcon emoji="&#127968;" /> My Website
               </RetroButton>
-              <RetroButton href="https://njump.me/npub1nl8r463jkdtr0qu0k3dht03jt9t59cttk0j8gtxg9wea2russlnq2zf9d0">
+              <RetroButton href="https://ditto.pub/npub1nl8r463jkdtr0qu0k3dht03jt9t59cttk0j8gtxg9wea2russlnq2zf9d0">
                 <AnimatedIcon emoji="&#129449;" /> Nostr Profile
               </RetroButton>
               <RetroButton href="https://sessions.soapbox.pub/">
