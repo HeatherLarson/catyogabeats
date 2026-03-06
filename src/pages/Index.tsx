@@ -496,8 +496,11 @@ const Index = () => {
             <p className="text-cyan-400 text-xs mb-2">
               <AnimatedIcon emoji="&#128187;" /> Made with Notepad and lots of love! <AnimatedIcon emoji="&#10084;" />
             </p>
-            <p className="text-yellow-400 text-xs mb-4">
+            <p className="text-yellow-400 text-xs mb-2">
               &copy; 1998-2001 Heather Larson
+            </p>
+            <p className="text-pink-400 text-xs mb-4">
+              &#9829;2026 Copying is not theft.
             </p>
             
             <div className="flex justify-center gap-4 items-center flex-wrap mb-4">
