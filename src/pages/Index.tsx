@@ -497,7 +497,7 @@ const Index = () => {
               <AnimatedIcon emoji="&#128187;" /> Made with Notepad and lots of love! <AnimatedIcon emoji="&#10084;" />
             </p>
             <p className="text-yellow-400 text-xs mb-4">
-              &copy; 1998-2001 Heather Larson. All rights reserved. Do not steal!!!
+              &copy; 1998-2001 Heather Larson
             </p>
             
             <div className="flex justify-center gap-4 items-center flex-wrap mb-4">
