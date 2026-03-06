@@ -518,16 +518,6 @@ const Index = () => {
             <p className="text-pink-400 text-lg animate-glow">
               <AnimatedIcon emoji="&#11088;" /> Thanks 4 visiting! Come back soon! <AnimatedIcon emoji="&#11088;" />
             </p>
-            
-            {/* Email link oldschool style */}
-            <p className="text-cyan-300 text-sm mt-4">
-              <a 
-                href="mailto:heather@destinyarchitecture.net" 
-                className="hover:text-yellow-400 underline"
-              >
-                <AnimatedIcon emoji="&#128231;" /> Click here to email me! <AnimatedIcon emoji="&#128231;" />
-              </a>
-            </p>
           </footer>
         </div>
       </div>
