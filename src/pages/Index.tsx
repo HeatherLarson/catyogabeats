@@ -1,263 +1,521 @@
 import { useSeoMeta } from '@unhead/react';
+import { useState, useEffect } from 'react';
+
+// Classic retro blinkie component - 150x20px style like blinkies.cafe
+const Blinkie = ({ 
+  text, 
+  emoji,
+  bg1, 
+  bg2, 
+  textColor = '#fff',
+  sparkleColor = '#fff',
+  borderColor = '#000'
+}: { 
+  text: string;
+  emoji?: string;
+  bg1: string;
+  bg2: string;
+  textColor?: string;
+  sparkleColor?: string;
+  borderColor?: string;
+}) => (
+  <div 
+    className="relative overflow-hidden select-none"
+    style={{ 
+      width: '150px', 
+      height: '20px',
+      imageRendering: 'pixelated',
+      border: `1px solid ${borderColor}`,
+      background: `linear-gradient(180deg, ${bg1} 0%, ${bg2} 50%, ${bg1} 100%)`,
+      boxShadow: 'inset 1px 1px 0 rgba(255,255,255,0.3), inset -1px -1px 0 rgba(0,0,0,0.3)'
+    }}
+  >
+    <span className="absolute text-[8px] animate-blink" style={{ color: sparkleColor, top: '2px', left: '4px' }}>*</span>
+    <span className="absolute text-[8px] animate-blink-delay" style={{ color: sparkleColor, top: '8px', left: '12px' }}>+</span>
+    <span className="absolute text-[8px] animate-blink" style={{ color: sparkleColor, bottom: '2px', right: '4px' }}>*</span>
+    <span className="absolute text-[8px] animate-blink-delay" style={{ color: sparkleColor, bottom: '6px', right: '14px' }}>+</span>
+    <span 
+      className="absolute inset-0 flex items-center justify-center text-[9px] font-bold tracking-wide uppercase gap-1"
+      style={{ 
+        color: textColor,
+        fontFamily: '"Courier New", monospace',
+        textShadow: textColor === '#fff' ? '1px 1px 0 #000' : 'none',
+      }}
+    >
+      {emoji && <span className="text-[10px]">{emoji}</span>}
+      {text}
+      {emoji && <span className="text-[10px]">{emoji}</span>}
+    </span>
+    <div className="absolute inset-0 animate-shine" style={{ background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%)', width: '30px' }} />
+  </div>
+);
+
+// Marquee text component
+const MarqueeText = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
+  <div className={`overflow-hidden whitespace-nowrap ${className}`}>
+    <div className="inline-block animate-marquee">
+      {children}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{children}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </div>
+  </div>
+);
+
+// Classic 90s animated GIF placeholder (using CSS animations)
+const AnimatedIcon = ({ emoji, className = '' }: { emoji: string; className?: string }) => (
+  <span className={`inline-block ${className}`}>
+    {emoji}
+  </span>
+);
+
+// Hit counter component
+const HitCounter = () => {
+  const [count, setCount] = useState(420);
+  
+  useEffect(() => {
+    // Randomly increment like those old counters
+    const interval = setInterval(() => {
+      setCount(c => c + Math.floor(Math.random() * 3));
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+  
+  return (
+    <div className="inline-flex items-center gap-2">
+      <span className="text-yellow-400 text-xs">You are visitor #</span>
+      <span className="hit-counter">{String(count).padStart(6, '0')}</span>
+    </div>
+  );
+};
+
+// Retro 3D button
+const RetroButton = ({ children, href, className = '' }: { children: React.ReactNode; href: string; className?: string }) => (
+  <a 
+    href={href}
+    target="_blank"
+    rel="noopener noreferrer"
+    className={`retro-button inline-block hover:brightness-110 ${className}`}
+  >
+    {children}
+  </a>
+);
+
+// Webring navigation component
+const WebringNav = ({ name, prevUrl, nextUrl, color }: { name: string; prevUrl: string; nextUrl: string; color: string }) => (
+  <div 
+    className="flex items-center gap-2 px-3 py-2 text-xs"
+    style={{ 
+      border: `2px ridge ${color}`,
+      background: 'rgba(0,0,0,0.5)'
+    }}
+  >
+    <a href={prevUrl} className="text-white hover:text-yellow-400">&lt;&lt; Prev</a>
+    <span style={{ color }}>{name}</span>
+    <a href={nextUrl} className="text-white hover:text-yellow-400">Next &gt;&gt;</a>
+  </div>
+);
 
 const Index = () => {
   useSeoMeta({
-    title: 'Heather Larson | Cat Yoga Beats',
-    description: 'A personal space celebrating cats, music, yoga, and bitcoin.',
+    title: '~*~HeAtHeR\'s HoMePaGe~*~ - Cats, Music, Yoga & Bitcoin!!!',
+    description: 'Welcome to my corner of the web! Cats, music, yoga, and bitcoin!',
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-violet-950 via-purple-900 to-orange-900">
-      {/* Animated background orbs */}
+    <div 
+      className="min-h-screen"
+      style={{ 
+        background: 'linear-gradient(180deg, #000033 0%, #000066 50%, #330066 100%)',
+        fontFamily: '"Comic Sans MS", "Comic Sans", cursive',
+      }}
+    >
+      {/* Tiled stars background - very 90s */}
+      <div 
+        className="fixed inset-0 pointer-events-none opacity-30"
+        style={{
+          backgroundImage: `radial-gradient(circle, #ffffff 1px, transparent 1px)`,
+          backgroundSize: '50px 50px',
+        }}
+      />
+      
+      {/* Animated starfield */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-purple-500/20 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute top-40 right-20 w-96 h-96 bg-orange-500/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
-        <div className="absolute bottom-20 left-1/3 w-80 h-80 bg-pink-500/15 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }} />
+        {[...Array(80)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute bg-white rounded-full animate-pulse"
+            style={{
+              width: `${1 + Math.random() * 2}px`,
+              height: `${1 + Math.random() * 2}px`,
+              top: `${Math.random() * 100}%`,
+              left: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 3}s`,
+              animationDuration: `${1 + Math.random() * 2}s`,
+              boxShadow: '0 0 3px #fff',
+            }}
+          />
+        ))}
       </div>
 
       {/* Main content */}
       <div className="relative z-10">
-        {/* Hero Section */}
-        <header className="min-h-screen flex flex-col items-center justify-center px-4 py-12">
-          <div className="max-w-4xl mx-auto text-center">
-            {/* Profile image */}
-            <div className="relative mb-8 inline-block">
-              <div className="absolute inset-0 bg-gradient-to-r from-orange-400 via-pink-500 to-purple-600 rounded-full blur-lg opacity-75 animate-pulse" />
-              <img
-                src="/hero-cat.jpg"
-                alt="Zen Cat"
-                className="relative w-48 h-48 md:w-64 md:h-64 rounded-full object-cover border-4 border-white/20 shadow-2xl"
+        {/* Top banner with marquee */}
+        <div 
+          className="py-1"
+          style={{
+            background: 'linear-gradient(90deg, #ff0066, #9900ff, #0066ff, #00ff66, #ffff00, #ff0066)',
+            borderTop: '4px ridge #ffff00',
+            borderBottom: '4px ridge #ffff00',
+          }}
+        >
+          <MarqueeText className="text-white text-sm font-bold drop-shadow-lg">
+            <span>~*~ Welcome to Heather's Homepage! ~*~</span>
+            <AnimatedIcon emoji="&#127775;" className="animate-spin-slow mx-2" />
+            <span>Best viewed in Netscape Navigator 4.0 at 800x600</span>
+            <AnimatedIcon emoji="&#128190;" className="animate-bounce-slow mx-2" />
+            <span>Page created with Notepad!!!</span>
+            <AnimatedIcon emoji="&#128008;" className="animate-wiggle mx-2" />
+            <span>Last updated: March 1999</span>
+            <AnimatedIcon emoji="&#11088;" className="animate-pulse mx-2" />
+          </MarqueeText>
+        </div>
+
+        {/* Main table layout - very 1998! */}
+        <div className="max-w-4xl mx-auto py-4 px-2">
+          
+          {/* Animated header */}
+          <div className="text-center mb-6">
+            {/* Dancing letters header */}
+            <h1 className="text-4xl md:text-6xl font-bold mb-2">
+              {'~*~HeAtHeR~*~'.split('').map((letter, i) => (
+                <span 
+                  key={i}
+                  className="inline-block animate-bounce-slow"
+                  style={{ 
+                    color: ['#ff00ff', '#00ffff', '#ffff00', '#ff6600', '#00ff00', '#ff0099', '#9900ff'][i % 7],
+                    textShadow: '2px 2px 0 #000, 4px 4px 0 rgba(0,0,0,0.5)',
+                    fontFamily: '"Comic Sans MS", cursive',
+                    animationDelay: `${i * 0.1}s`,
+                  }}
+                >
+                  {letter === ' ' ? '\u00A0' : letter}
+                </span>
+              ))}
+            </h1>
+            
+            {/* Glowing subtitle */}
+            <p className="text-xl md:text-2xl animate-glow" style={{ color: '#00ffff' }}>
+              <AnimatedIcon emoji="&#11088;" className="animate-spin-slow" />
+              {' '}Cats + Music + Yoga + Bitcoin{' '}
+              <AnimatedIcon emoji="&#11088;" className="animate-spin-slow" />
+            </p>
+          </div>
+
+          {/* Under construction banner */}
+          <div className="text-center mb-4">
+            <div 
+              className="inline-flex items-center gap-3 px-6 py-2"
+              style={{
+                background: 'linear-gradient(90deg, #ffff00, #ff6600, #ffff00)',
+                border: '3px dashed #000',
+              }}
+            >
+              <AnimatedIcon emoji="&#128679;" className="text-2xl animate-bounce-slow" />
+              <span className="text-black font-bold text-lg animate-blink">!! UNDER CONSTRUCTION !!</span>
+              <AnimatedIcon emoji="&#128679;" className="text-2xl animate-bounce-slow" />
+            </div>
+          </div>
+
+          {/* Profile section with retro frame */}
+          <div className="flex flex-col items-center mb-6">
+            {/* Profile pic with multiple nested borders - very 90s */}
+            <div 
+              className="p-1 mb-4"
+              style={{ 
+                border: '4px ridge #ff00ff',
+                background: 'linear-gradient(135deg, #330066, #660033)',
+                boxShadow: '0 0 20px rgba(255,0,255,0.5)',
+              }}
+            >
+              <div style={{ border: '3px groove #00ffff', padding: '4px' }}>
+                <div style={{ border: '2px solid #ffff00', padding: '2px' }}>
+                  <img
+                    src="https://blossom.primal.net/95b02bc70259ab5d3d4584ba1dd24b2d6bf3a058b8eb2edb885ef677b33b6d0c.jpg"
+                    alt="Heather Larson"
+                    className="w-44 h-44 object-cover"
+                    style={{ 
+                      filter: 'saturate(1.2)',
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Hit counter */}
+            <div className="mb-4">
+              <HitCounter />
+            </div>
+
+            {/* Blinkies collection */}
+            <div className="flex flex-wrap justify-center gap-1 mb-4">
+              <Blinkie text="CAT MOM" emoji="&#128008;" bg1="#ff9966" bg2="#ff6600" sparkleColor="#ffff00" />
+              <Blinkie text="MUSIC IS LIFE" emoji="&#127925;" bg1="#ff66cc" bg2="#cc0099" sparkleColor="#ffffff" />
+              <Blinkie text="NAMASTE" emoji="&#129495;" bg1="#cc99ff" bg2="#6633cc" sparkleColor="#ffccff" />
+              <Blinkie text="STACK SATS" emoji="&#8383;" bg1="#ffcc00" bg2="#ff9900" textColor="#000" sparkleColor="#ffffff" borderColor="#996600" />
+              <Blinkie text="NOSTR FTW" emoji="&#129449;" bg1="#9966ff" bg2="#6600cc" sparkleColor="#ffccff" />
+              <Blinkie text="PLEB LIFE" emoji="&#9889;" bg1="#ffff66" bg2="#ffcc00" textColor="#000" sparkleColor="#ff6600" borderColor="#cc9900" />
+              <Blinkie text="Y2K COMPLIANT" emoji="&#128190;" bg1="#66ff66" bg2="#009900" sparkleColor="#ffff00" borderColor="#006600" />
+              <Blinkie text="I &lt;3 HTML" emoji="&#128187;" bg1="#66ccff" bg2="#0066cc" sparkleColor="#ffffff" borderColor="#003366" />
+            </div>
+          </div>
+
+          {/* Animated divider */}
+          <div className="text-center my-4">
+            <span className="animate-rainbow text-2xl tracking-widest">
+              {'* * * * * * * * * * * * *'.split('').map((char, i) => (
+                <span 
+                  key={i} 
+                  className="inline-block"
+                  style={{ animationDelay: `${i * 0.1}s` }}
+                >
+                  {char}
+                </span>
+              ))}
+            </span>
+          </div>
+
+          {/* About Me section - frame style */}
+          <div className="frame-box mb-6 p-4">
+            <h2 className="text-2xl text-center mb-4 fire-text font-bold">
+              ~*~ About Me ~*~
+            </h2>
+            <div className="retro-cell">
+              <p className="text-cyan-300 text-center leading-relaxed">
+                <AnimatedIcon emoji="&#128075;" className="animate-wiggle" /> Hey there! Welcome to my corner of the internet! 
+                I'm a yoga teacher, podcast host, and proud cat mom.
+                When I'm not on the mat or stacking sats, you'll find me exploring the world of music
+                and creating content for the Nostr community. I've been sober since July 1, 2013! 
+                Thanks for stopping by!!! <AnimatedIcon emoji="&#128075;" className="animate-wiggle" />
+              </p>
+              <p className="text-center mt-4">
+                <span className="text-pink-400 text-xl glitter-text">=^.^= Meow! =^.^=</span>
+              </p>
+            </div>
+          </div>
+
+          {/* What I'm Into - Classic table layout */}
+          <div className="frame-box mb-6 p-4">
+            <h2 className="text-2xl text-center mb-4 glitter-text" style={{ color: '#ffff00' }}>
+              ~*~ My Interests ~*~
+            </h2>
+            <table className="w-full retro-table">
+              <tbody>
+                <tr>
+                  <td className="retro-cell text-center w-1/4">
+                    <AnimatedIcon emoji="&#128008;" className="text-5xl block mb-2 animate-float" />
+                    <h3 className="text-pink-400 font-bold">CATS</h3>
+                    <p className="text-cyan-300 text-xs">Proud cat mom!</p>
+                    <p className="text-yellow-300 text-xs">Meow!!!</p>
+                  </td>
+                  <td className="retro-cell text-center w-1/4">
+                    <AnimatedIcon emoji="&#127925;" className="text-5xl block mb-2 animate-bounce-slow" />
+                    <h3 className="text-pink-400 font-bold">MUSIC</h3>
+                    <p className="text-cyan-300 text-xs">Radio Detox host</p>
+                    <p className="text-yellow-300 text-xs">Tunes 4ever!</p>
+                  </td>
+                  <td className="retro-cell text-center w-1/4">
+                    <AnimatedIcon emoji="&#129495;" className="text-5xl block mb-2 animate-float" />
+                    <h3 className="text-pink-400 font-bold">YOGA</h3>
+                    <p className="text-cyan-300 text-xs">Certified teacher</p>
+                    <p className="text-yellow-300 text-xs">Namaste!</p>
+                  </td>
+                  <td className="retro-cell text-center w-1/4">
+                    <AnimatedIcon emoji="&#8383;" className="text-5xl block mb-2 animate-bounce-slow" />
+                    <h3 className="text-pink-400 font-bold">BITCOIN</h3>
+                    <p className="text-cyan-300 text-xs">Stack sats daily!</p>
+                    <p className="text-yellow-300 text-xs">HODL!</p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          {/* Cool Links section */}
+          <div className="frame-box mb-6 p-4">
+            <h2 className="text-2xl text-center mb-4" style={{ color: '#00ff00', textShadow: '2px 2px 0 #006600' }}>
+              <AnimatedIcon emoji="&#128279;" className="animate-wiggle" /> Cool Links <AnimatedIcon emoji="&#128279;" className="animate-wiggle" />
+            </h2>
+            <div className="flex flex-wrap justify-center gap-3">
+              <RetroButton href="https://fountain.fm/show/IgdKDWtHpDc67T0wqqoO">
+                <AnimatedIcon emoji="&#127908;" /> Radio Detox
+              </RetroButton>
+              <RetroButton href="https://nostr-creators.shakespeare.wtf/">
+                <AnimatedIcon emoji="&#128172;" /> Nostr Creators
+              </RetroButton>
+              <RetroButton href="https://destinyarchitecture.net">
+                <AnimatedIcon emoji="&#127968;" /> My Website
+              </RetroButton>
+              <RetroButton href="https://njump.me/npub1nl8r463jkdtr0qu0k3dht03jt9t59cttk0j8gtxg9wea2russlnq2zf9d0">
+                <AnimatedIcon emoji="&#129449;" /> Nostr Profile
+              </RetroButton>
+              <RetroButton href="https://sessions.soapbox.pub/">
+                <AnimatedIcon emoji="&#127897;" /> Sessions Pod
+              </RetroButton>
+            </div>
+          </div>
+
+          {/* Email / Contact section */}
+          <div className="frame-box mb-6 p-4 text-center">
+            <h2 className="text-2xl mb-4 glitter-text" style={{ color: '#ff99ff' }}>
+              ~*~ Contact Me! ~*~
+            </h2>
+            <p className="text-cyan-300 mb-4">
+              <AnimatedIcon emoji="&#128231;" className="animate-bounce-slow" /> Drop me a line! I love making new friends! <AnimatedIcon emoji="&#128231;" className="animate-bounce-slow" />
+            </p>
+            <div className="inline-block px-4 py-2" style={{ border: '2px inset #666', background: '#000' }}>
+              <span className="text-lime-400 font-mono">heather [at] destinyarchitecture [dot] net</span>
+            </div>
+            <p className="text-yellow-400 mt-4 text-sm animate-pulse">
+              <AnimatedIcon emoji="&#128172;" /> Or find me on Nostr! <AnimatedIcon emoji="&#128172;" />
+            </p>
+          </div>
+
+          {/* Guestbook teaser */}
+          <div className="frame-box mb-6 p-4 text-center">
+            <h2 className="text-2xl mb-4 fire-text">
+              <AnimatedIcon emoji="&#128214;" /> Sign My Guestbook! <AnimatedIcon emoji="&#128214;" />
+            </h2>
+            <p className="text-cyan-300 mb-4">
+              Let me know you stopped by! Leave a note!
+            </p>
+            <div 
+              className="inline-block px-6 py-2 animate-pulse"
+              style={{
+                background: 'linear-gradient(180deg, #ffcc00 0%, #ff9900 50%, #ff6600 100%)',
+                border: '3px outset #ffcc00',
+                color: '#000',
+                fontWeight: 'bold',
+                cursor: 'pointer',
+              }}
+            >
+              <AnimatedIcon emoji="&#9997;" /> SIGN GUESTBOOK <AnimatedIcon emoji="&#9997;" />
+            </div>
+            <p className="text-pink-400 mt-4 text-sm">
+              (Coming soon - guestbooks are so cool!)
+            </p>
+          </div>
+
+          {/* Web rings section */}
+          <div className="text-center mb-6">
+            <p className="text-pink-400 mb-3 text-lg">~ Member of These Webrings ~</p>
+            <div className="flex flex-wrap justify-center gap-3">
+              <WebringNav 
+                name="Nostr Webring" 
+                prevUrl="#" 
+                nextUrl="#" 
+                color="#9966ff" 
+              />
+              <WebringNav 
+                name="Bitcoin Plebs" 
+                prevUrl="#" 
+                nextUrl="#" 
+                color="#ff9900" 
+              />
+              <WebringNav 
+                name="Cat Lovers Ring" 
+                prevUrl="#" 
+                nextUrl="#" 
+                color="#ff66cc" 
+              />
+              <WebringNav 
+                name="Indie Web Ring" 
+                prevUrl="#" 
+                nextUrl="#" 
+                color="#00ff99" 
               />
             </div>
+          </div>
 
-            {/* Title with gradient */}
-            <h1 className="text-5xl md:text-7xl font-bold mb-4 bg-gradient-to-r from-orange-300 via-pink-300 to-purple-300 bg-clip-text text-transparent">
-              Heather Larson
-            </h1>
+          {/* Badges section */}
+          <div className="text-center mb-6">
+            <p className="text-cyan-400 mb-3">~ Cool Badges ~</p>
+            <div className="flex flex-wrap justify-center gap-2">
+              {/* Fake 88x31 badges */}
+              {[
+                { text: 'Netscape NOW!', bg: '#006600', border: '#00ff00' },
+                { text: 'Made with Notepad', bg: '#000066', border: '#0099ff' },
+                { text: 'Best viewed 800x600', bg: '#660066', border: '#ff66ff' },
+                { text: 'NO FRAMES!', bg: '#660000', border: '#ff6666' },
+                { text: 'JavaScript', bg: '#666600', border: '#ffff00' },
+                { text: 'HTML 4.0', bg: '#006666', border: '#00ffff' },
+              ].map((badge, i) => (
+                <div 
+                  key={i}
+                  className="px-2 py-1 text-[10px] font-bold text-white"
+                  style={{
+                    background: badge.bg,
+                    border: `2px solid ${badge.border}`,
+                    minWidth: '88px',
+                    textAlign: 'center',
+                    fontFamily: '"Courier New", monospace',
+                  }}
+                >
+                  {badge.text}
+                </div>
+              ))}
+            </div>
+          </div>
 
-            {/* Tagline */}
-            <p className="text-xl md:text-2xl text-purple-200/80 mb-8 font-light tracking-wide">
-              Cats + Music + Yoga + Bitcoin
+          {/* Animated divider */}
+          <hr className="retro my-6" />
+
+          {/* Footer */}
+          <footer className="text-center py-4">
+            <div className="mb-4">
+              <AnimatedIcon emoji="&#128008;" className="text-3xl animate-wiggle mx-2" />
+              <AnimatedIcon emoji="&#127925;" className="text-3xl animate-bounce-slow mx-2" />
+              <AnimatedIcon emoji="&#129495;" className="text-3xl animate-float mx-2" />
+              <AnimatedIcon emoji="&#9889;" className="text-3xl animate-spin-slow mx-2" />
+            </div>
+            
+            <p className="text-purple-400 text-sm mb-2">
+              This page is best viewed at 800x600 resolution in Netscape Navigator 4.0+
             </p>
-
-            {/* Animated decorative line */}
-            <div className="w-32 h-1 mx-auto bg-gradient-to-r from-orange-400 via-pink-500 to-purple-500 rounded-full mb-12" />
-
-            {/* Bio */}
-            <p className="text-lg text-purple-100/70 max-w-2xl mx-auto leading-relaxed mb-12">
-              Welcome to my corner of the internet! I'm a yoga teacher, podcast host, and proud cat mom. 
-              When I'm not on the mat or stacking sats, you'll find me exploring the world of music 
-              and creating content for the Nostr community.
+            <p className="text-cyan-400 text-xs mb-2">
+              <AnimatedIcon emoji="&#128187;" /> Made with Notepad and lots of love! <AnimatedIcon emoji="&#10084;" />
             </p>
-
-            {/* CTA Buttons */}
-            <div className="flex flex-wrap justify-center gap-4">
-              <a
-                href="#about"
-                className="px-8 py-3 bg-gradient-to-r from-orange-500 to-pink-600 text-white font-semibold rounded-full hover:shadow-lg hover:shadow-orange-500/30 transition-all duration-300 hover:-translate-y-1"
-              >
-                Explore
-              </a>
-              <a
-                href="https://nostr.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-8 py-3 border-2 border-purple-400/50 text-purple-200 font-semibold rounded-full hover:bg-purple-500/20 transition-all duration-300 hover:-translate-y-1"
-              >
-                Find me on Nostr
-              </a>
-            </div>
-          </div>
-
-          {/* Scroll indicator */}
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-            <svg className="w-6 h-6 text-purple-300/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-            </svg>
-          </div>
-        </header>
-
-        {/* About Section */}
-        <section id="about" className="py-20 px-4">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 text-white">
-              What I'm <span className="bg-gradient-to-r from-orange-400 to-pink-500 bg-clip-text text-transparent">Into</span>
-            </h2>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {/* Cats Card */}
-              <div className="group relative">
-                <div className="absolute inset-0 bg-gradient-to-br from-orange-500/30 to-pink-500/30 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-8 hover:bg-white/10 transition-all duration-500 hover:-translate-y-2">
-                  <div className="text-6xl mb-4">
-                    <svg className="w-16 h-16 text-orange-400" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
-                    </svg>
-                  </div>
-                  <h3 className="text-2xl font-bold text-white mb-3">Cats</h3>
-                  <p className="text-purple-200/70">Proud cat mom. My furry friends bring joy to every day and inspire my zen moments.</p>
-                </div>
-              </div>
-
-              {/* Music Card */}
-              <div className="group relative">
-                <div className="absolute inset-0 bg-gradient-to-br from-pink-500/30 to-purple-500/30 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-8 hover:bg-white/10 transition-all duration-500 hover:-translate-y-2">
-                  <div className="text-6xl mb-4">
-                    <svg className="w-16 h-16 text-pink-400" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
-                    </svg>
-                  </div>
-                  <h3 className="text-2xl font-bold text-white mb-3">Music</h3>
-                  <p className="text-purple-200/70">Podcast host at Radio Detox. Short songs are so fiat - make songs longer!</p>
-                </div>
-              </div>
-
-              {/* Yoga Card */}
-              <div className="group relative">
-                <div className="absolute inset-0 bg-gradient-to-br from-purple-500/30 to-blue-500/30 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-8 hover:bg-white/10 transition-all duration-500 hover:-translate-y-2">
-                  <div className="text-6xl mb-4">
-                    <svg className="w-16 h-16 text-purple-400" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                    </svg>
-                  </div>
-                  <h3 className="text-2xl font-bold text-white mb-3">Yoga</h3>
-                  <p className="text-purple-200/70">Certified yoga teacher finding balance and peace, one breath at a time.</p>
-                </div>
-              </div>
-
-              {/* Bitcoin Card */}
-              <div className="group relative">
-                <div className="absolute inset-0 bg-gradient-to-br from-orange-500/30 to-yellow-500/30 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-8 hover:bg-white/10 transition-all duration-500 hover:-translate-y-2">
-                  <div className="text-6xl mb-4">
-                    <svg className="w-16 h-16 text-orange-400" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M11.5 11.5v-2h1c.55 0 1 .45 1 1s-.45 1-1 1h-1zm0 4.5v-2h1.5c.55 0 1 .45 1 1s-.45 1-1 1h-1.5zm6.5-4c0-1.93-1.57-3.5-3.5-3.5H13V6h-2v2.5H9.5V6h-2v2.5H6v2h1.5v5H6v2h1.5V20h2v-2.5H11V20h2v-2.5h.5c1.93 0 3.5-1.57 3.5-3.5 0-1.04-.46-1.97-1.18-2.61.72-.64 1.18-1.57 1.18-2.61z"/>
-                    </svg>
-                  </div>
-                  <h3 className="text-2xl font-bold text-white mb-3">Bitcoin</h3>
-                  <p className="text-purple-200/70">Pleb. Stacker. Building on the future of sound money and financial freedom.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Projects Section */}
-        <section className="py-20 px-4 bg-black/20">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 text-white">
-              What I'm <span className="bg-gradient-to-r from-pink-400 to-orange-400 bg-clip-text text-transparent">Working On</span>
-            </h2>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {/* Radio Detox */}
-              <a
-                href="https://fountain.fm/show/IgdKDWtHpDc67T0wqqoO"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group block"
-              >
-                <div className="bg-gradient-to-br from-purple-900/50 to-pink-900/50 backdrop-blur-sm border border-white/10 rounded-3xl p-8 hover:border-pink-500/50 transition-all duration-500 hover:-translate-y-2">
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-r from-pink-500 to-purple-500 rounded-xl flex items-center justify-center">
-                      <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM9.5 16.5v-9l7 4.5-7 4.5z"/>
-                      </svg>
-                    </div>
-                    <h3 className="text-2xl font-bold text-white">Radio Detox</h3>
-                  </div>
-                  <p className="text-purple-200/70 mb-4">Chief Detox Officer - bringing you the best in music, conversations, and good vibes.</p>
-                  <span className="text-pink-400 font-medium group-hover:text-pink-300 transition-colors">Listen now &rarr;</span>
-                </div>
-              </a>
-
-              {/* Nostr Creators */}
-              <a
-                href="https://nostr-creators.shakespeare.wtf/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group block"
-              >
-                <div className="bg-gradient-to-br from-orange-900/50 to-purple-900/50 backdrop-blur-sm border border-white/10 rounded-3xl p-8 hover:border-orange-500/50 transition-all duration-500 hover:-translate-y-2">
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-pink-500 rounded-xl flex items-center justify-center">
-                      <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
-                      </svg>
-                    </div>
-                    <h3 className="text-2xl font-bold text-white">Nostr Creators</h3>
-                  </div>
-                  <p className="text-purple-200/70 mb-4">Resources and guides for content creators new to Nostr and the decentralized web.</p>
-                  <span className="text-orange-400 font-medium group-hover:text-orange-300 transition-colors">Check it out &rarr;</span>
-                </div>
-              </a>
-            </div>
-          </div>
-        </section>
-
-        {/* Contact Section */}
-        <section className="py-20 px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-4xl md:text-5xl font-bold mb-8 text-white">
-              Let's <span className="bg-gradient-to-r from-orange-400 to-pink-500 bg-clip-text text-transparent">Connect</span>
-            </h2>
-            <p className="text-xl text-purple-200/70 mb-12">
-              Find me on these platforms or zap me some sats!
+            <p className="text-yellow-400 text-xs mb-4">
+              &copy; 1998-2001 Heather Larson. All rights reserved. Do not steal!!!
             </p>
-
-            <div className="flex flex-wrap justify-center gap-6 mb-12">
+            
+            <div className="flex justify-center gap-4 items-center flex-wrap mb-4">
               <a
-                href="https://destinyarchitecture.net"
+                href="https://shakespeare.diy"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-14 h-14 bg-white/10 backdrop-blur-sm border border-white/10 rounded-2xl flex items-center justify-center hover:bg-white/20 transition-all duration-300 hover:-translate-y-1"
-                title="Website"
+                className="text-lime-400 hover:text-lime-200 text-xs underline animate-pulse"
               >
-                <svg className="w-6 h-6 text-purple-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
-                </svg>
+                Vibed with Shakespeare
               </a>
-              <a
-                href="https://fountain.fm/show/IgdKDWtHpDc67T0wqqoO"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-14 h-14 bg-white/10 backdrop-blur-sm border border-white/10 rounded-2xl flex items-center justify-center hover:bg-white/20 transition-all duration-300 hover:-translate-y-1"
-                title="Fountain FM"
-              >
-                <svg className="w-6 h-6 text-purple-300" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM9.5 16.5v-9l7 4.5-7 4.5z"/>
-                </svg>
-              </a>
+              <span className="text-pink-400 text-xs">|</span>
+              <span className="text-cyan-400 text-xs">Internet Explorer = Bad!</span>
+              <span className="text-pink-400 text-xs">|</span>
+              <span className="text-lime-400 text-xs">GeoCities Forever!</span>
             </div>
-
-            {/* Lightning Address */}
-            <div className="inline-flex items-center gap-3 bg-gradient-to-r from-orange-500/20 to-yellow-500/20 border border-orange-400/30 rounded-2xl px-6 py-4">
-              <svg className="w-6 h-6 text-orange-400" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M7 2v11h3v9l7-12h-4l4-8z"/>
-              </svg>
-              <span className="text-orange-200 font-mono text-sm">heatherlarson@fountain.fm</span>
-            </div>
-          </div>
-        </section>
-
-        {/* Footer */}
-        <footer className="py-8 px-4 border-t border-white/10">
-          <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-purple-300/50 text-sm">
-              &copy; 2026 Heather Larson. All rights reserved.
+            
+            <p className="text-pink-400 text-lg animate-glow">
+              <AnimatedIcon emoji="&#11088;" /> Thanks 4 visiting! Come back soon! <AnimatedIcon emoji="&#11088;" />
             </p>
-            <a
-              href="https://shakespeare.diy"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-purple-300/50 hover:text-purple-300 text-sm transition-colors"
-            >
-              Vibed with Shakespeare
-            </a>
-          </div>
-        </footer>
+            
+            {/* Email link oldschool style */}
+            <p className="text-cyan-300 text-sm mt-4">
+              <a 
+                href="mailto:heather@destinyarchitecture.net" 
+                className="hover:text-yellow-400 underline"
+              >
+                <AnimatedIcon emoji="&#128231;" /> Click here to email me! <AnimatedIcon emoji="&#128231;" />
+              </a>
+            </p>
+          </footer>
+        </div>
       </div>
     </div>
   );
