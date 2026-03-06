@@ -364,19 +364,31 @@ const Index = () => {
             </div>
           </div>
 
-          {/* Email / Contact section */}
+          {/* Contact section */}
           <div className="frame-box mb-6 p-4 text-center">
             <h2 className="text-2xl mb-4 glitter-text" style={{ color: '#ff99ff' }}>
               ~*~ Contact Me! ~*~
             </h2>
             <p className="text-cyan-300 mb-4">
-              <AnimatedIcon emoji="&#128231;" className="animate-bounce-slow" /> Drop me a line! I love making new friends! <AnimatedIcon emoji="&#128231;" className="animate-bounce-slow" />
+              <AnimatedIcon emoji="&#129449;" className="animate-bounce-slow" /> Follow me on Nostr! I love making new friends! <AnimatedIcon emoji="&#129449;" className="animate-bounce-slow" />
             </p>
-            <div className="inline-block px-4 py-2" style={{ border: '2px inset #666', background: '#000' }}>
-              <span className="text-lime-400 font-mono">heather [at] destinyarchitecture [dot] net</span>
-            </div>
+            <a
+              href="https://ditto.pub/npub1nl8r463jkdtr0qu0k3dht03jt9t59cttk0j8gtxg9wea2russlnq2zf9d0"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block px-6 py-3 hover:brightness-110"
+              style={{
+                background: 'linear-gradient(180deg, #9966ff 0%, #6633cc 50%, #330099 100%)',
+                border: '3px outset #9966ff',
+                color: '#fff',
+                fontWeight: 'bold',
+                textDecoration: 'none',
+              }}
+            >
+              <AnimatedIcon emoji="&#129449;" /> Follow @heatherlarson on Ditto <AnimatedIcon emoji="&#129449;" />
+            </a>
             <p className="text-yellow-400 mt-4 text-sm animate-pulse">
-              <AnimatedIcon emoji="&#128172;" /> Or find me on Nostr! <AnimatedIcon emoji="&#128172;" />
+              <AnimatedIcon emoji="&#128172;" /> The future of social is Nostr! <AnimatedIcon emoji="&#128172;" />
             </p>
           </div>
 
