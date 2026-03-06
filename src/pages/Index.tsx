@@ -258,7 +258,9 @@ const Index = () => {
             <div className="flex flex-wrap justify-center gap-1 mb-4">
               <Blinkie text="CAT MOM" emoji="&#128008;" bg1="#ff9966" bg2="#ff6600" sparkleColor="#ffff00" />
               <Blinkie text="MUSIC IS LIFE" emoji="&#127925;" bg1="#ff66cc" bg2="#cc0099" sparkleColor="#ffffff" />
-              <Blinkie text="NAMASTE" emoji="&#129495;" bg1="#cc99ff" bg2="#6633cc" sparkleColor="#ffccff" />
+              <Blinkie text="SOBER SINCE 7-1-13" emoji="&#11088;" bg1="#00cccc" bg2="#006666" sparkleColor="#ffffff" borderColor="#003333" />
+              <Blinkie text="Y2K SHIFT SURVIVOR" emoji="&#128190;" bg1="#333333" bg2="#000000" sparkleColor="#00ff00" borderColor="#00ff00" />
+              <Blinkie text="YOGA TEACHER" emoji="&#129495;" bg1="#cc99ff" bg2="#6633cc" sparkleColor="#ffccff" />
               <Blinkie text="STACK SATS" emoji="&#8383;" bg1="#ffcc00" bg2="#ff9900" textColor="#000" sparkleColor="#ffffff" borderColor="#996600" />
               <Blinkie text="NOSTR FTW" emoji="&#129449;" bg1="#9966ff" bg2="#6600cc" sparkleColor="#ffccff" />
               <Blinkie text="PLEB LIFE" emoji="&#9889;" bg1="#ffff66" bg2="#ffcc00" textColor="#000" sparkleColor="#ff6600" borderColor="#cc9900" />
